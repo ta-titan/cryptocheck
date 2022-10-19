@@ -1,3 +1,13 @@
 <resources>
   <string name="app_name">CryptoCheck</string>
+  <string name="coin1">Bitcoin</string>
+  <string name="coin2">etherum</string>
+  <string name="coin3">Dogecoin</string>
+  <string name="coin4">Binance</string>
+  <string name="coin5">Tether</string>
+  <string name="coin6">Litecoin</string>
+  <string name="coin7">Monero</string>
+  <string name="coin8">Verge</string>
+  <string name="coin9">Tron</string>
+  <string name="coin10">Nano</string>
 </resources>
