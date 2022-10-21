@@ -59,4 +59,10 @@ dependencies {
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach{
+        kotlinOptions{
+            freeCompilerArgs +=["-Xjvm-default=all",]
+        }
+    }
 }

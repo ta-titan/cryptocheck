@@ -24,7 +24,7 @@ public abstract class CoinRoomDB : RoomDatabase(){
         val instance = Room.databaseBuilder(
           context.applicationContext,
           CoinRoomDB::class.java,
-          "word_database"
+          "coin_database"
         ).build()
         INSTANCE = instance
         // return instance

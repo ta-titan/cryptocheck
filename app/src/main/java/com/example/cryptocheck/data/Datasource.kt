@@ -7,16 +7,16 @@ class Datasource {
 
   fun loadCoins(): List<Coin> {
     return listOf<Coin>(
-      getCoin("", 1),
-      getCoin("", 2),
-      getCoin("", 3),
-      getCoin("", 4),
-      getCoin("", 5),
-      getCoin("", 6),
-      getCoin("", 7),
-      getCoin("", 8),
-      getCoin("", 9),
-      getCoin("", 10)
+      getCoin("Bitcoin", 1),
+      getCoin("Binance", 2),
+      getCoin("Etherum", 3),
+      getCoin("Dogecoin", 4),
+      getCoin("Tether", 5),
+      getCoin("Litecoin", 6),
+      getCoin("Monero", 7),
+      getCoin("Verge", 8),
+      getCoin("Tron", 9),
+      getCoin("Nano", 10)
     )
   }
 
