@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocheck.adapter.CoinAdapter
 import com.example.cryptocheck.data.Datasource
@@ -14,7 +16,17 @@ class MainActivity : AppCompatActivity() {
 
   private val coinViewModel: CoinViewModel by viewModels {
     CoinViewModelFactory((application as CoinApplication).repository)
+
   }
+//  private val coinViewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+//    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//      if (modelClass.isAssignableFrom(CoinViewModel::class.java)) {
+//        @Suppress("UNCHECKED_CAST")
+//        return CoinViewModel((application as CoinApplication).repository) as T
+//      }
+//      throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//  })[CoinViewModel::class.java]
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

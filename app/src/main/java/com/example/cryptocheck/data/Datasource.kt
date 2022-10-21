@@ -7,16 +7,20 @@ class Datasource {
 
   fun loadCoins(): List<Coin> {
     return listOf<Coin>(
-      Coin(R.string.coin1),
-      Coin(R.string.coin2),
-      Coin(R.string.coin3),
-      Coin(R.string.coin4),
-      Coin(R.string.coin5),
-      Coin(R.string.coin6),
-      Coin(R.string.coin7),
-      Coin(R.string.coin8),
-      Coin(R.string.coin9),
-      Coin(R.string.coin10)
+      getCoin("", 1),
+      getCoin("", 2),
+      getCoin("", 3),
+      getCoin("", 4),
+      getCoin("", 5),
+      getCoin("", 6),
+      getCoin("", 7),
+      getCoin("", 8),
+      getCoin("", 9),
+      getCoin("", 10)
     )
+  }
+
+  fun getCoin(name: String, id : Int) : Coin {
+    return Coin(id, "", name, 1, 1, 1, 1, 1)
   }
 }
