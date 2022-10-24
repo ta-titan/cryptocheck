@@ -10,6 +10,6 @@ class CoinApplication : Application() {
 
   val applicationScope = CoroutineScope(SupervisorJob())
 
-  val database by lazy { CoinRoomDB.getDatabase(this) }
+  val database by lazy { CoinRoomDB.getDatabase(this, applicationScope) }
   val repository by lazy { Coinrepo(database.coinDao()) }
 }

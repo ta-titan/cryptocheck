@@ -1,6 +1,7 @@
 package com.example.cryptocheck.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,16 +20,18 @@ class CoinAdapter(
   val apiClient by lazy { CoinApiClient.create() }
   var coins: List<Coin> = ArrayList()
 
-  init { refreshCoins() }
+//  init { refreshCoins() }
 
   class CoinViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     val coinTextView: TextView = view.findViewById(R.id.coin_title)
-    fun bind(coin: Coin?) {
-      coinTextView.text = coin?.name
+    fun bind(coin: Coin) {
+      Log.d("adapter_coin", coin.name)
+      coinTextView.text = coin.name
     }
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
+    Log.d("adapter", "adapter_onCreateViewHolder")
     // create a new view
     val adapterLayout = LayoutInflater.from(parent.context)
       .inflate(R.layout.coin_list_item, parent, false)
@@ -37,19 +40,19 @@ class CoinAdapter(
   }
 
   override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
-    val item = coins[position]
+    val item = getItem(position)
     // TBD
     // holder.textView.text = context.resources.getString(item.id)
     holder.bind(item)
   }
 
-  override fun getItemCount(): Int {
-    return coins.size
-  }
+//  override fun getItemCount(): Int {
+//    return coins.size
+//  }
 
   fun refreshCoins() {
     // later will be changed to apiClient.getCoins()
-    coins = CoinApiClient.getCoins()
+    // coins = CoinApiClient.getCoins()
   }
 
 
