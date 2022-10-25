@@ -7,20 +7,20 @@ class Datasource {
 
   fun loadCoins(): List<Coin> {
     return listOf<Coin>(
-      getCoin("Bitcoin", 1),
-      getCoin("Binance", 2),
-      getCoin("Etherum", 3),
-      getCoin("Dogecoin", 4),
-      getCoin("Tether", 5),
-      getCoin("Litecoin", 6),
-      getCoin("Monero", 7),
-      getCoin("Verge", 8),
-      getCoin("Tron", 9),
-      getCoin("Nano", 10)
+      getCoin("Bitcoin", 1, "BTC"),
+      getCoin("Binance", 2, "BIN"),
+      getCoin("Etherum", 3, "ETH"),
+      getCoin("Dogecoin", 4, "DGE"),
+      getCoin("Tether", 5, "TTH"),
+      getCoin("Litecoin", 6, "LTE"),
+      getCoin("Monero", 7, "MNO"),
+      getCoin("Verge", 8, "VGE"),
+      getCoin("Tron", 9, "TRN"),
+      getCoin("Nano", 10, "NNO")
     )
   }
 
-  fun getCoin(name: String, id : Int) : Coin {
-    return Coin(id, "", name, 1, 1, 1, 1, 1)
+  fun getCoin(name: String, id : Int, symbol : String) : Coin {
+    return Coin(id, symbol, name, 1, 1, 1, 1, 1)
   }
 }

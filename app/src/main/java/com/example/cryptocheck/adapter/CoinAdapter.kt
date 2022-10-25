@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocheck.CoinApiClient
 import com.example.cryptocheck.R
+import com.example.cryptocheck.fragments.Coin_list_fragment
 import com.example.cryptocheck.model.Coin
 
 class CoinAdapter(
-  private val context: Context
+  private val context: Coin_list_fragment
 ) : ListAdapter<Coin, CoinAdapter.CoinViewHolder>(CoinComparator()){
 
   val apiClient by lazy { CoinApiClient.create() }
@@ -23,10 +24,21 @@ class CoinAdapter(
 //  init { refreshCoins() }
 
   class CoinViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-    val coinTextView: TextView = view.findViewById(R.id.coin_title)
+    val coinName: TextView = view.findViewById(R.id.coin_name)
+
+
+    val coinSymbol: TextView = view.findViewById(R.id.coin_symbol)
+
+    val coinPrice: TextView = view.findViewById(R.id.coin_price)
+
+    val coinChange: TextView = view.findViewById(R.id.coin_change)
+
     fun bind(coin: Coin) {
       Log.d("adapter_coin", coin.name)
-      coinTextView.text = coin.name
+      coinName.text = coin.name
+      coinPrice.text = coin.price.toString()
+      coinSymbol.text = coin.symbol
+      coinChange.text = coin.percentChange1D.toString()
     }
   }
 
