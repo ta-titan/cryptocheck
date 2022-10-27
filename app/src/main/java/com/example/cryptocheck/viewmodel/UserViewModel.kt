@@ -6,7 +6,7 @@ import com.example.cryptocheck.repository.UserRepo
 
 class UserViewModel(private val repo: UserRepo) : ViewModel() {
 
-  val currentUser : LiveData<CurrentUser> = repo.currentUser.asLiveData()
+  val currentUser : LiveData<CurrentUser> = repo.currentUser
 
 }
 

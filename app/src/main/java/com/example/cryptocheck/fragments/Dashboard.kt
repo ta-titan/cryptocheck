@@ -35,7 +35,10 @@ class Dashboard : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     binding.userViewModel = viewModel
-    viewModel.currentUser.value?.userName?.let { Log.d("dashboard created", it) }
+//    viewModel.currentUser.value?.userName?.let { Log.d("dashboard created", it) }
+    viewModel.currentUser.observe(viewLifecycleOwner, {currentUser ->
+      binding.currentUser = currentUser
+    })
   }
   companion object {
     @JvmStatic
