@@ -4,10 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1366906474820144" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/coin_list.xml" value="0.1933876811594203" />
         <entry key="app/src/main/res/layout/coin_list_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_coin_list_fragment.xml" value="0.2947916666666667" />
-        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.30340220133463536" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.29375" />
       </map>
     </option>

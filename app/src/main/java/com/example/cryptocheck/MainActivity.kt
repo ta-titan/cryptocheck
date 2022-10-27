@@ -13,6 +13,7 @@ import com.example.cryptocheck.adapter.CoinAdapter
 import com.example.cryptocheck.data.Datasource
 import com.example.cryptocheck.databinding.ActivityMainBinding
 import com.example.cryptocheck.model.Coin
+import com.example.cryptocheck.model.CurrentUser
 import com.example.cryptocheck.viewmodel.CoinViewModel
 import com.example.cryptocheck.viewmodel.CoinViewModelFactory
 import kotlinx.coroutines.CoroutineScope
@@ -41,13 +42,16 @@ class MainActivity : AppCompatActivity() {
      CoroutineScope(Dispatchers.IO).launch {
        // default data
        val coinDao = (application as CoinApplication).database.coinDao()
+       val userDao = (application as CoinApplication).database.userDao()
        coinDao.deleteAll()
 
        val coins: List<Coin> = Datasource().loadCoins()
+       val currentUser : CurrentUser = Datasource().loadCurrentUser()
 
        for (coin in coins) {
          coinDao.insert(coin)
        }
+       userDao.insertCurrentUser(currentUser)
      }
   }
   override fun onCreate(savedInstanceState: Bundle?) {

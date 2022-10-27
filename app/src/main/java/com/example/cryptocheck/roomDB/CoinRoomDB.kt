@@ -2,21 +2,24 @@ package com.example.cryptocheck.roomDB
 
 import android.content.Context
 import android.util.Log
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.cryptocheck.dao.CoinDao
+import com.example.cryptocheck.dao.UserDao
 import com.example.cryptocheck.data.Datasource
 import com.example.cryptocheck.model.Coin
+import com.example.cryptocheck.model.CurrentUser
+import com.example.cryptocheck.model.User
+import com.example.cryptocheck.util.ListToStringConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(Coin::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Coin::class, User::class, CurrentUser::class), version = 1, exportSchema = false)
+@TypeConverters(ListToStringConverter::class)
 public abstract class CoinRoomDB : RoomDatabase(){
 
   abstract fun coinDao() : CoinDao
-
+  abstract fun userDao() : UserDao
 
   private class CoinDBCallback(
     private val scope: CoroutineScope
@@ -28,14 +31,16 @@ public abstract class CoinRoomDB : RoomDatabase(){
       INSTANCE?.let { database ->
         scope.launch {
           var coinDao = database.coinDao()
-
+          var userDao = database.userDao()
           coinDao.deleteAll()
 
           val coins : List<Coin> = Datasource().loadCoins()
+          val currentUser : CurrentUser = Datasource().loadCurrentUser()
 
           for ( coin in coins ) {
             coinDao.insert(coin)
           }
+          userDao.insertCurrentUser(currentUser)
         }
       }
     }

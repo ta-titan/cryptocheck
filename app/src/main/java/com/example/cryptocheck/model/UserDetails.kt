@@ -1,5 +1,7 @@
 package com.example.cryptocheck.model
 
+import com.google.gson.annotations.SerializedName
+
 data class UserDetails (
-  val watchlist : List<Coin>
+  @SerializedName("watchlist")val watchlist : List<Coin>
 )

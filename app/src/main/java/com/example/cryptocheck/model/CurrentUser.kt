@@ -4,10 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "user_table")
-class User (
+@Entity(tableName = "current_user")
+class CurrentUser(
   @PrimaryKey(autoGenerate = true) val id: Int,
-  @ColumnInfo(name="userName") val userName : String,
   @ColumnInfo(name="watchList") val watchList : List<Int>,
+  @ColumnInfo(name = "userName") val userName: String
 )
-
