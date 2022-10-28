@@ -1,44 +1,71 @@
 package com.example.cryptocheck.adapter
 
-import android.content.Context
+import android.app.PendingIntent.getActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocheck.CoinApiClient
 import com.example.cryptocheck.R
-import com.example.cryptocheck.fragments.Coin_list_fragment
+import com.example.cryptocheck.fragments.CoinFragment
+import com.example.cryptocheck.fragments.CoinListFragment
 import com.example.cryptocheck.model.Coin
+import com.example.cryptocheck.viewmodel.UserViewModel
 
 class CoinAdapter(
-  private val context: Coin_list_fragment
+  private val context: CoinListFragment,
+  private val userViewModel: UserViewModel,
 ) : ListAdapter<Coin, CoinAdapter.CoinViewHolder>(CoinComparator()){
 
   val apiClient by lazy { CoinApiClient.create() }
   var coins: List<Coin> = ArrayList()
 
+
+  public interface CreateFragmentListener {
+    fun createFragmentListener(coin : Coin)
+  }
 //  init { refreshCoins() }
 
   class CoinViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+
     val coinName: TextView = view.findViewById(R.id.coin_name)
-
-
     val coinSymbol: TextView = view.findViewById(R.id.coin_symbol)
-
     val coinPrice: TextView = view.findViewById(R.id.coin_price)
-
     val coinChange: TextView = view.findViewById(R.id.coin_change)
+    val favButton: CheckBox = view.findViewById(R.id.add2Fav)
 
-    fun bind(coin: Coin) {
+    fun bind(coin: Coin, userViewModel: UserViewModel) {
       Log.d("adapter_coin", coin.name)
       coinName.text = coin.name
       coinPrice.text = coin.price.toString()
       coinSymbol.text = coin.symbol
       coinChange.text = coin.percentChange1D.toString()
+      favButton.isChecked = userViewModel.currentUserWatchList.get()?.contains(coin.id) == true
+    }
+
+    fun add2favListener(coin : Coin, userViewModel: UserViewModel) {
+      favButton.setOnClickListener {
+        if ( favButton.isChecked )
+          userViewModel.addCoinToWatchList(coin, false)
+        else
+          userViewModel.addCoinToWatchList(coin, true)
+        Log.d("Coin added to fav:", coin.name)
+      }
+    }
+
+
+    fun coinNameSymbolListener(coin : Coin, context: CoinListFragment) {
+      coinName.setOnClickListener {
+        context.createFragmentListener(coin)
+      }
+      coinSymbol.setOnClickListener {
+        context.createFragmentListener(coin)
+      }
     }
   }
 
@@ -55,12 +82,10 @@ class CoinAdapter(
     val item = getItem(position)
     // TBD
     // holder.textView.text = context.resources.getString(item.id)
-    holder.bind(item)
+    holder.bind(item, userViewModel)
+    holder.add2favListener(item, userViewModel)
+    holder.coinNameSymbolListener(item, context)
   }
-
-//  override fun getItemCount(): Int {
-//    return coins.size
-//  }
 
   fun refreshCoins() {
     // later will be changed to apiClient.getCoins()

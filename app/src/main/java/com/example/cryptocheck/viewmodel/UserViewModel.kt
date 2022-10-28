@@ -1,12 +1,27 @@
 package com.example.cryptocheck.viewmodel
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.*
+import com.example.cryptocheck.model.Coin
 import com.example.cryptocheck.model.CurrentUser
 import com.example.cryptocheck.repository.UserRepo
 
 class UserViewModel(private val repo: UserRepo) : ViewModel() {
 
-  val currentUser : LiveData<CurrentUser> = repo.currentUser
+  val currentUserName  = ObservableField<String>()
+  val currentUserWatchList = ObservableField<List<Int>>()
+
+  fun syncUserViewModel() {
+    repo.currentUser.subscribe{
+      currentUserName.set(it.userName)
+      currentUserWatchList.set(it.watchList)
+    }
+  }
+
+
+  fun addCoinToWatchList(coin : Coin, add : Boolean ) {
+    repo.addCoinToWatchList(coin, add)
+  }
 
 }
 

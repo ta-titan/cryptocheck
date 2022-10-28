@@ -62,12 +62,4 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/coin_price" />
 
-  <CheckBox
-    android:id="@+id/add2Fav"
-    android:layout_width="63dp"
-    android:layout_height="30dp"
-    android:text="fav"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

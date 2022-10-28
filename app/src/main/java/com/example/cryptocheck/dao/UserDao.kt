@@ -6,6 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.cryptocheck.model.CurrentUser
 import com.example.cryptocheck.model.User
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -24,7 +26,10 @@ interface UserDao {
 
   // Queries for current user table
   @Query("SELECT * FROM current_user LIMIT 1")
-  fun getCurrentUser() : Flow<CurrentUser>
+  fun getCurrentUser() : Flowable<CurrentUser>
+
+  @Query("UPDATE current_user SET watchList = :watchList WHERE id = :id")
+  fun addCoinToWatchList(watchList: List<Int>, id : Int)
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insertCurrentUser(currentUser: CurrentUser)

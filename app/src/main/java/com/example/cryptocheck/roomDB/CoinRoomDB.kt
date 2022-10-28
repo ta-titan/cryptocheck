@@ -40,6 +40,7 @@ public abstract class CoinRoomDB : RoomDatabase(){
           for ( coin in coins ) {
             coinDao.insert(coin)
           }
+          userDao.deleteCurrentUser()
           userDao.insertCurrentUser(currentUser)
         }
       }
