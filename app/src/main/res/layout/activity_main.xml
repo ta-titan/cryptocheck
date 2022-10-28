@@ -8,10 +8,6 @@
   android:layout_height="match_parent"
   tools:context=".MainActivity">
 
-  <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
     <fragment
       android:id="@+id/flFragment"
       android:name="androidx.navigation.fragment.NavHostFragment"
@@ -24,20 +20,6 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:navGraph="@navigation/nav_graph" />
-
-
-    <fragment
-      android:id="@+id/coinView"
-      android:name="com.example.cryptocheck.fragments.CoinFragment"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.5"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-  </FrameLayout>
-
 
 
   <com.google.android.material.bottomnavigation.BottomNavigationView
