@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity() {
     binding= ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    navController = Navigation.findNavController(this, R.id.flFragment)
-    setupWithNavController(binding.bottomNavigationView, navController)
+//    navController = Navigation.findNavController(this, R.id.flFragment)
+//    setupWithNavController(binding.bottomNavigationView, navController)
 
     initDatabase()
   }
