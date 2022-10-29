@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.cryptocheck.data.Datasource
 import com.example.cryptocheck.databinding.ActivityMainBinding
@@ -41,7 +42,8 @@ class MainActivity : AppCompatActivity() {
     setContentView(binding.root)
 
 //    navController = Navigation.findNavController(this, R.id.flFragment)
-//    setupWithNavController(binding.bottomNavigationView, navController)
+    navController = (supportFragmentManager.findFragmentById(R.id.flFragment) as NavHostFragment).navController
+    setupWithNavController(binding.bottomNavigationView, navController)
 
     initDatabase()
   }
