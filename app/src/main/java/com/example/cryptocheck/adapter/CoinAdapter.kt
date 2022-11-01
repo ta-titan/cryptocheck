@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -25,35 +26,43 @@ class CoinAdapter(
   val apiClient by lazy { CoinApiClient.create() }
   var coins: List<Coin> = ArrayList()
 
-
   public interface CreateFragmentListener {
     fun createFragmentListener(coin : Coin)
   }
 //  init { refreshCoins() }
 
   class CoinViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-
     val coinName: TextView = view.findViewById(R.id.coin_name)
     val coinSymbol: TextView = view.findViewById(R.id.coin_symbol)
     val coinPrice: TextView = view.findViewById(R.id.coin_price)
     val coinChange: TextView = view.findViewById(R.id.coin_change)
     val favButton: CheckBox = view.findViewById(R.id.add2Fav)
+    val symbolLogo : ImageView = view.findViewById(R.id.listItemSvg)
 
-    fun bind(coin: Coin, userViewModel: UserViewModel) {
+    fun bind(coin: Coin, userViewModel: UserViewModel, context: CoinListFragment) {
       Log.d("adapter_coin", coin.name)
       coinName.text = coin.name
       coinPrice.text = coin.price.toString()
       coinSymbol.text = coin.symbol
       coinChange.text = coin.percentChange1D.toString()
-      favButton.isChecked = userViewModel.currentUserWatchList.get()?.contains(coin.id) == true
+      favButton.isChecked = userViewModel.currentUser.value?.watchList?.contains(coin.id) == true
+      Log.d("currentWatchList", userViewModel.currentUser.value?.watchList?.size.toString())
+      var resID = context.resources.getIdentifier(coin.symbol.lowercase(), "drawable", "com.example.cryptocheck")
+      if ( resID == null || resID == 0)
+        resID = context.resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")
+
+      symbolLogo.setImageResource(resID)
     }
 
     fun add2favListener(coin : Coin, userViewModel: UserViewModel) {
       favButton.setOnClickListener {
-        if ( favButton.isChecked )
-          userViewModel.addCoinToWatchList(coin, false)
-        else
+        if ( favButton.isChecked ) {
+          Log.d("already_checked", coin.name)
           userViewModel.addCoinToWatchList(coin, true)
+        }
+        else {
+          userViewModel.addCoinToWatchList(coin, false)
+        }
         Log.d("Coin added to fav:", coin.name)
       }
     }
@@ -80,9 +89,7 @@ class CoinAdapter(
 
   override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
     val item = getItem(position)
-    // TBD
-    // holder.textView.text = context.resources.getString(item.id)
-    holder.bind(item, userViewModel)
+    holder.bind(item, userViewModel, context)
     holder.add2favListener(item, userViewModel)
     holder.coinNameSymbolListener(item, context)
   }

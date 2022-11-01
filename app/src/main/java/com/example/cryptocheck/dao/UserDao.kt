@@ -26,7 +26,7 @@ interface UserDao {
 
   // Queries for current user table
   @Query("SELECT * FROM current_user LIMIT 1")
-  fun getCurrentUser() : Flowable<CurrentUser>
+  fun getCurrentUser() : Flow<CurrentUser>
 
   @Query("UPDATE current_user SET watchList = :watchList WHERE id = :id")
   fun addCoinToWatchList(watchList: List<Int>, id : Int)
@@ -36,4 +36,7 @@ interface UserDao {
 
   @Query("DELETE FROM current_user")
   fun deleteCurrentUser()
+
+  @Query("UPDATE current_user SET userName = :userName WHERE id = :id")
+  fun updateUserName(userName : String, id : Int)
 }

@@ -13,13 +13,17 @@ interface CoinApiClient {
 
 //  @GET("coins") fun getCoins(@Header("Authorization") token:String): Observable<CoinList>
 
+
+
   companion object {
+
+    val baseUrl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/"
 
     fun create(): CoinApiClient {
 
       val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl("http://127.0.0.1/")
+        .baseUrl(baseUrl)
         .build()
 
       return retrofit.create(CoinApiClient::class.java)

@@ -10,15 +10,15 @@ class Datasource {
   fun loadCoins(): List<Coin> {
     return listOf<Coin>(
       getCoin("Bitcoin", 1, "BTC"),
-      getCoin("Binance", 2, "BIN"),
+      getCoin("Binance", 2, "BNB"),
       getCoin("Etherum", 3, "ETH"),
-      getCoin("Dogecoin", 4, "DGE"),
-      getCoin("Tether", 5, "TTH"),
-      getCoin("Litecoin", 6, "LTE"),
-      getCoin("Monero", 7, "MNO"),
-      getCoin("Verge", 8, "VGE"),
-      getCoin("Tron", 9, "TRN"),
-      getCoin("Nano", 10, "NNO")
+      getCoin("Dogecoin", 4, "DOGE"),
+      getCoin("Tether", 5, "USDT"),
+      getCoin("Litecoin", 6, "LTC"),
+      getCoin("Monero", 7, "XMR"),
+      getCoin("Verge", 8, "XVG"),
+      getCoin("Tron", 9, "TRX"),
+      getCoin("Nano", 10, "NANO")
     )
   }
 

@@ -12,23 +12,35 @@ import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import okhttp3.internal.toImmutableList
 
 class UserRepo(private val userDao: UserDao) {
 
   val allUsers: Flow<List<User>> = userDao.getAllUsersFromRoomDb()
 
-  val currentUser: Flowable<CurrentUser> = userDao.getCurrentUser()
+  val currentUser: Flow<CurrentUser> = userDao.getCurrentUser()
 
   fun addCoinToWatchList(coin: Coin, add : Boolean) {
     CoroutineScope(Dispatchers.IO).launch {
-      var watchList = currentUser.blockingFirst().watchList.toMutableList()
-      if ( add )
+
+      var watchList = currentUser.first().watchList.toMutableList()
+      if ( add ) {
         watchList.add(coin.id)
-      else
+      }
+      else {
         watchList.remove(coin.id)
+      }
       Log.d("Watchlist upd in repo", watchList.size.toString())
-      userDao.addCoinToWatchList(watchList, coin.id)
+      userDao.addCoinToWatchList(watchList.toImmutableList(), currentUser.first().id)
+    }
+  }
+
+  fun updateUsername(name : String) {
+    CoroutineScope(Dispatchers.IO).launch {
+      val id = currentUser.first().id
+      userDao.updateUserName(name, id)
     }
   }
 

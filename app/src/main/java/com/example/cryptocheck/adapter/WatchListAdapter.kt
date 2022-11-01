@@ -14,13 +14,13 @@ import com.example.cryptocheck.model.Coin
 
 class WatchListAdapter (
   private val context : Dashboard,
-) : ListAdapter<Coin, WatchListAdapter.WatchListItemHolder>(CoinAdapter.CoinComparator()) {
+) : ListAdapter<Coin, WatchListAdapter.WatchListItemHolder>(CoinComparator()) {
 
   class WatchListItemHolder(private val view : View) : RecyclerView.ViewHolder(view) {
-    val coinName: TextView = view.findViewById(R.id.coin_name)
-    val coinSymbol: TextView = view.findViewById(R.id.coin_symbol)
-    val coinPrice: TextView = view.findViewById(R.id.coin_price)
-    val coinChange: TextView = view.findViewById(R.id.coin_change)
+    val coinName: TextView = view.findViewById(R.id.coin_name_wl)
+    val coinSymbol: TextView = view.findViewById(R.id.coin_symbol_wl)
+    val coinPrice: TextView = view.findViewById(R.id.coin_price_wl)
+    val coinChange: TextView = view.findViewById(R.id.coin_change_wl)
 
     fun bind(coin: Coin) {
       Log.d("watchListViewHolder", coin.name)
@@ -35,6 +35,7 @@ class WatchListAdapter (
     var adapterLayout = LayoutInflater.from(parent.context)
       .inflate(R.layout.watch_list_item, parent, false)
 
+    Log.d("wl_adapter", "watch list adapter created ")
     return WatchListItemHolder(adapterLayout)
   }
 
