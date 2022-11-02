@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityMainBinding
 
+  val apiClient by lazy { CoinApiClient.create() }
+
   public val userViewModel: UserViewModel by viewModels<UserViewModel> {
     UserViewModelFactory((application as CoinApplication).userRepo)
   }
@@ -37,20 +39,47 @@ class MainActivity : AppCompatActivity() {
     CoinViewModelFactory((application as CoinApplication).repository)
   }
 
+  fun updateCoinsFromApi () {
+      apiClient.getCoinsListing().subscribeOn(Schedulers.io())
+      .doOnError {
+        Log.d("api_error", "Could not fetch coins : " + it.message)
+      }
+      .retry(3)
+      .subscribe{ coins : CoinResponse ->
+        if ( coins != null) {
+          Log.d("api_response",coins.coinData?.size.toString())
+//          var coinsDecoded = ApiHelper.Companion.convertResponseToModel(coins)
+//          Log.d("apiCall", coinsDecoded.size.toString())
+//          updateDatabase(coinsDecoded)
+        }
+      }
+
+  }
+
    fun updateDatabase(coins : List<Coin>) {
      CoroutineScope(Dispatchers.IO).launch {
        // default data
        val coinDao = (application as CoinApplication).database.coinDao()
-       val userDao = (application as CoinApplication).database.userDao()
        coinDao.deleteAll()
-       val currentUser : CurrentUser = Datasource().loadCurrentUser()
+
 
        for (coin in coins) {
          coinDao.insert(coin)
        }
-       userDao.deleteCurrentUser()
-       userDao.insertCurrentUser(currentUser)
      }
+  }
+
+  fun cleanDatabase() {
+    CoroutineScope(Dispatchers.IO).launch {
+      // default data
+      val coinDao = (application as CoinApplication).database.coinDao()
+      val userDao = (application as CoinApplication).database.userDao()
+      coinDao.deleteAll()
+
+      val currentUser : CurrentUser = Datasource().loadCurrentUser()
+      userDao.deleteCurrentUser()
+      userDao.insertCurrentUser(currentUser)
+    }
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,16 +94,7 @@ class MainActivity : AppCompatActivity() {
       .replace(R.id.flFragmentHost, navHostFragment)
       .commit()
 
-
-
-    val apiClient by lazy { CoinApiClient.create() }
-     val data = apiClient.getCoinsListing()
-    data.subscribeOn(Schedulers.io()).observeOn(Schedulers.io())
-      .subscribe { coins : CoinResponse ->
-        var coinsDecoded = ApiHelper.Companion.convertResponseToModel(coins)
-        Log.d("apiCall", coinsDecoded.size.toString())
-        updateDatabase(coinsDecoded)
-      }
-
+    cleanDatabase()
+    updateCoinsFromApi()
   }
 }
