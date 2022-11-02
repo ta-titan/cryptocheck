@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "current_user")
 class CurrentUser(
   @PrimaryKey(autoGenerate = true) val id: Int,
-  @ColumnInfo(name="watchList") val watchList : List<Int>,
+  @ColumnInfo(name="watchList") val watchList : List<String>,
   @ColumnInfo(name = "userName") val userName: String
 )

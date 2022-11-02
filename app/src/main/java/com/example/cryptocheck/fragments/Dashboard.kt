@@ -43,7 +43,7 @@ class Dashboard : Fragment() {
     return binding.root
   }
 
-  fun getWatchListFromIds(ids : List<Int>) : List<Coin> {
+  fun getWatchListFromIds(ids : List<String>) : List<Coin> {
     var watchList : List<Coin> = mutableListOf()
     val allCoins = (activity as MainActivity).coinViewModel.allCoins.value
 

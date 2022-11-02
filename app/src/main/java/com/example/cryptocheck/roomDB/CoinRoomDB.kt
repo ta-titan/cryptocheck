@@ -14,7 +14,7 @@ import com.example.cryptocheck.util.ListToStringConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(Coin::class, User::class, CurrentUser::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Coin::class, User::class, CurrentUser::class), version = 2, exportSchema = false)
 @TypeConverters(ListToStringConverter::class)
 public abstract class CoinRoomDB : RoomDatabase(){
 
@@ -30,18 +30,7 @@ public abstract class CoinRoomDB : RoomDatabase(){
       Log.d("coinDBcallback", "onCreate")
       INSTANCE?.let { database ->
         scope.launch {
-          var coinDao = database.coinDao()
-          var userDao = database.userDao()
-          coinDao.deleteAll()
 
-          val coins : List<Coin> = Datasource().loadCoins()
-          val currentUser : CurrentUser = Datasource().loadCurrentUser()
-
-          for ( coin in coins ) {
-            coinDao.insert(coin)
-          }
-          userDao.deleteCurrentUser()
-          userDao.insertCurrentUser(currentUser)
         }
       }
     }
@@ -66,6 +55,7 @@ public abstract class CoinRoomDB : RoomDatabase(){
           CoinRoomDB::class.java,
           "coin_database"
         ).addCallback(CoinDBCallback(scope))
+          .fallbackToDestructiveMigration()
           .build()
         INSTANCE = instance
         // return instance

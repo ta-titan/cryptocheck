@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -21,13 +22,19 @@ class WatchListAdapter (
     val coinSymbol: TextView = view.findViewById(R.id.coin_symbol_wl)
     val coinPrice: TextView = view.findViewById(R.id.coin_price_wl)
     val coinChange: TextView = view.findViewById(R.id.coin_change_wl)
+    val symbolLogo : ImageView = view.findViewById(R.id.coin_logo_wl)
 
-    fun bind(coin: Coin) {
+    fun bind(coin: Coin, context : Dashboard) {
       Log.d("watchListViewHolder", coin.name)
       coinName.text = coin.name
       coinPrice.text = coin.price.toString()
       coinSymbol.text = coin.symbol
       coinChange.text = coin.percentChange1D.toString()
+      var resID = context.resources.getIdentifier(coin.symbol.lowercase(), "drawable", "com.example.cryptocheck")
+      if ( resID == null || resID == 0)
+        resID = context.resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")
+
+      symbolLogo.setImageResource(resID)
     }
   }
 
@@ -42,7 +49,7 @@ class WatchListAdapter (
   override fun onBindViewHolder(holder: WatchListItemHolder, position: Int) {
     val item = getItem(position)
 
-    holder.bind(item)
+    holder.bind(item, context)
   }
 
   class CoinComparator : DiffUtil.ItemCallback<Coin>() {

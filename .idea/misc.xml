@@ -5,7 +5,9 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1366906474820144" />
         <entry key="app/src/main/res/drawable/_give.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ape.xml" value="0.1405" />
         <entry key="app/src/main/res/drawable/back_svg.xml" value="0.2355" />
+        <entry key="app/src/main/res/drawable/bnb.xml" value="0.157" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/coin_detail.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/coin_item.xml" value="0.29375" />

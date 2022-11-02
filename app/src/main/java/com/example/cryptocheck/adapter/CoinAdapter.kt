@@ -51,6 +51,9 @@ class CoinAdapter(
       if ( resID == null || resID == 0)
         resID = context.resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")
 
+      if ( coin.symbol.lowercase() == "ape")
+        resID = context.resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")
+
       symbolLogo.setImageResource(resID)
     }
 

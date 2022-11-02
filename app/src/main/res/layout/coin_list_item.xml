@@ -80,4 +80,30 @@
     app:layout_constraintTop_toTopOf="parent"
     app:srcCompat="@drawable/ic_action_name" />
 
+  <TextView
+    android:id="@+id/textView2"
+    android:layout_width="23dp"
+    android:layout_height="24dp"
+    android:text="$"
+    android:textAlignment="viewEnd"
+    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/coin_price"
+    app:layout_constraintHorizontal_bias="0.95"
+    app:layout_constraintStart_toEndOf="@+id/coin_name"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.19999999" />
+
+  <ImageView
+    android:id="@+id/imageView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/coin_change"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toEndOf="@+id/coin_symbol"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.784"
+    app:srcCompat="@drawable/trending_up" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

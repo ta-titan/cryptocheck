@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 class User (
   @PrimaryKey(autoGenerate = true) val id: Int,
   @ColumnInfo(name="userName") val userName : String,
-  @ColumnInfo(name="watchList") val watchList : List<Int>,
+  @ColumnInfo(name="watchList") val watchList : List<String>,
 )
 

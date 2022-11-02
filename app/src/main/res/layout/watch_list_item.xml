@@ -21,19 +21,19 @@
     android:id="@+id/coin_name_wl"
     android:layout_width="91dp"
     android:layout_height="35dp"
-    android:layout_marginStart="56dp"
+    android:layout_marginStart="72dp"
     android:text="TextView"
     android:textAppearance="@style/TextAppearance.AppCompat.Large"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.25" />
+    app:layout_constraintVertical_bias="0.275" />
 
   <TextView
     android:id="@+id/coin_symbol_wl"
     android:layout_width="wrap_content"
     android:layout_height="19dp"
-    android:layout_marginStart="60dp"
+    android:layout_marginStart="88dp"
     android:layout_marginTop="16dp"
     android:layout_marginBottom="10dp"
     android:text="TextView"
@@ -61,5 +61,15 @@
     android:text="TextView"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/coin_price_wl" />
+
+  <ImageView
+    android:id="@+id/coin_logo_wl"
+    android:layout_width="53dp"
+    android:layout_height="67dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/coin_name_wl"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/ic_action_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,7 +29,7 @@ interface UserDao {
   fun getCurrentUser() : Flow<CurrentUser>
 
   @Query("UPDATE current_user SET watchList = :watchList WHERE id = :id")
-  fun addCoinToWatchList(watchList: List<Int>, id : Int)
+  fun addCoinToWatchList(watchList: List<String>, id : Int)
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insertCurrentUser(currentUser: CurrentUser)
