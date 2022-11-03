@@ -1,5 +1,6 @@
 package com.example.cryptocheck.adapter
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ class WatchListAdapter (
     private val coinChange: TextView = view.findViewById(R.id.coin_change_wl)
     private val symbolLogo : ImageView = view.findViewById(R.id.coin_logo_wl)
     private val deleteButton : ImageView = view.findViewById(R.id.removeFromWatchList)
+    private val coinChangeSymbol : ImageView = view.findViewById(R.id.changeSymbol_wl)
 
     fun bind(coin: Coin, context : Dashboard) {
       Log.d("watchListViewHolder", coin.name)
@@ -34,6 +36,15 @@ class WatchListAdapter (
       coinPrice.text = coin.price.toString()
       coinSymbol.text = coin.symbol
       coinChange.text = coin.percentChange1D.toString()
+
+      if (coin.percentChange1D!! < 0) {
+        coinChange.setTextColor(Color.RED)
+        val resTrendingDown = context.resources.getIdentifier("trending_down", "drawable", "com.example.cryptocheck")
+        coinChangeSymbol.setImageResource(resTrendingDown)
+      } else {
+        coinChange.setTextColor(Color.GREEN)
+      }
+
       var resID = context.resources.getIdentifier(coin.symbol.lowercase(), "drawable", "com.example.cryptocheck")
       if (resID == 0)
         resID = context.resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")

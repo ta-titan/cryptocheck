@@ -48,7 +48,7 @@
     android:layout_width="73dp"
     android:layout_height="24dp"
     android:layout_marginTop="12dp"
-    android:layout_marginEnd="52dp"
+    android:layout_marginEnd="4dp"
     android:text="TextView"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
@@ -57,16 +57,17 @@
     android:id="@+id/coin_change"
     android:layout_width="53dp"
     android:layout_height="17dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="72dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
     android:text="TextView"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/coin_price" />
 
   <CheckBox
     android:id="@+id/add2Fav"
-    android:layout_width="63dp"
-    android:layout_height="30dp"
+    android:layout_width="60dp"
+    android:layout_height="19dp"
+    android:layout_marginEnd="160dp"
     android:text="fav"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent" />
@@ -96,15 +97,15 @@
     app:layout_constraintVertical_bias="0.19999999" />
 
   <ImageView
-    android:id="@+id/imageView"
+    android:id="@+id/changeSymbol"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toStartOf="@+id/coin_change"
-    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintHorizontal_bias="0.936"
     app:layout_constraintStart_toEndOf="@+id/coin_symbol"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.784"
+    app:layout_constraintVertical_bias="0.803"
     app:srcCompat="@drawable/trending_up" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
