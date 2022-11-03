@@ -64,13 +64,8 @@ class CoinListFragment : Fragment(), CoinAdapter.CreateFragmentListener {
       coins.let { adapter.submitList(it) }
     })
 
-    if (recyclerView != null) {
-      recyclerView.setHasFixedSize(true)
-    }
+      recyclerView?.addItemDecoration(DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL))
 
-    if (recyclerView != null) {
-      recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL))
-    }
   }
 
 }

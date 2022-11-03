@@ -41,18 +41,17 @@ class MainActivity : AppCompatActivity() {
 
   fun updateCoinsFromApi () {
       apiClient.getCoinsListing().subscribeOn(Schedulers.io())
-      .doOnError {
-        Log.d("api_error", "Could not fetch coins : " + it.message)
-      }
-      .retry(3)
-      .subscribe{ coins : CoinResponse ->
+      .retry(2)
+      .subscribe({ coins : CoinResponse? ->
         if ( coins != null) {
-          Log.d("api_response",coins.coinData?.size.toString())
-//          var coinsDecoded = ApiHelper.Companion.convertResponseToModel(coins)
-//          Log.d("apiCall", coinsDecoded.size.toString())
-//          updateDatabase(coinsDecoded)
+//          Log.d("api_response",coins.coinData?.size.toString())
+          var coinsDecoded = ApiHelper.Companion.convertResponseToModel(coins)
+          Log.d("apiCall", coinsDecoded.size.toString())
+          updateDatabase(coinsDecoded)
         }
-      }
+      },{
+        Log.d("api_error", "Could not fetch coins : " + it.message)
+      })
 
   }
 
@@ -61,7 +60,6 @@ class MainActivity : AppCompatActivity() {
        // default data
        val coinDao = (application as CoinApplication).database.coinDao()
        coinDao.deleteAll()
-
 
        for (coin in coins) {
          coinDao.insert(coin)

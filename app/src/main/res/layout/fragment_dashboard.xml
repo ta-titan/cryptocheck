@@ -16,10 +16,10 @@
 
     <TextView
       android:id="@+id/userName"
-      android:layout_width="220dp"
-      android:layout_height="55dp"
+      android:layout_width="180dp"
+      android:layout_height="52dp"
       android:layout_marginStart="16dp"
-      android:layout_marginTop="80dp"
+      android:layout_marginTop="32dp"
       android:text="@{userViewModel.currentUserName}"
       android:textAppearance="@style/TextAppearance.AppCompat.Large"
       app:layout_constraintStart_toStartOf="parent"
@@ -27,22 +27,23 @@
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/userWatchList"
-      android:layout_width="411dp"
-      android:layout_height="442dp"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:paddingTop="150dp"
       android:scrollbars="vertical"
       app:layoutManager="LinearLayoutManager"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/userName"
-      app:layout_constraintVertical_bias="0.785"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="1.0"
       tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
       android:id="@+id/edit_username"
       android:layout_width="36dp"
       android:layout_height="36dp"
-      android:layout_marginTop="88dp"
+      android:layout_marginTop="32dp"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.12"
+      app:layout_constraintHorizontal_bias="0.117"
       app:layout_constraintStart_toEndOf="@+id/userName"
       app:layout_constraintTop_toTopOf="parent"
       app:srcCompat="@drawable/edit_svg" />
@@ -51,13 +52,26 @@
       android:id="@+id/textView"
       android:layout_width="165dp"
       android:layout_height="32dp"
-      android:layout_marginStart="16dp"
+      android:layout_marginStart="28dp"
       android:text="My WatchList"
       android:textAppearance="@style/TextAppearance.AppCompat.Large"
       app:layout_constraintBottom_toTopOf="@+id/userWatchList"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/userName"
-      app:layout_constraintVertical_bias="0.575" />
+      app:layout_constraintVertical_bias="0.329" />
+
+    <TextView
+      android:id="@+id/textView9"
+      android:layout_width="124dp"
+      android:layout_height="29dp"
+      android:text="WatchList"
+      android:textAppearance="@style/TextAppearance.AppCompat.Large"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.055"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/userName"
+      app:layout_constraintVertical_bias="0.027" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
