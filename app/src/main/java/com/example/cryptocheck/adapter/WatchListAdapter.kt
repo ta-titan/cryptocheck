@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -12,9 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocheck.R
 import com.example.cryptocheck.fragments.Dashboard
 import com.example.cryptocheck.model.Coin
+import com.example.cryptocheck.viewmodel.UserViewModel
 
 class WatchListAdapter (
   private val context : Dashboard,
+  private val userViewModel: UserViewModel,
 ) : ListAdapter<Coin, WatchListAdapter.WatchListItemHolder>(CoinComparator()) {
 
   class WatchListItemHolder(view : View) : RecyclerView.ViewHolder(view) {
@@ -23,6 +26,7 @@ class WatchListAdapter (
     private val coinPrice: TextView = view.findViewById(R.id.coin_price_wl)
     private val coinChange: TextView = view.findViewById(R.id.coin_change_wl)
     private val symbolLogo : ImageView = view.findViewById(R.id.coin_logo_wl)
+    private val deleteButton : ImageView = view.findViewById(R.id.removeFromWatchList)
 
     fun bind(coin: Coin, context : Dashboard) {
       Log.d("watchListViewHolder", coin.name)
@@ -35,6 +39,13 @@ class WatchListAdapter (
         resID = context.resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")
 
       symbolLogo.setImageResource(resID)
+    }
+    fun remFromFavListener(coin : Coin, userViewModel: UserViewModel) {
+      deleteButton.setOnClickListener {
+        userViewModel.addCoinToWatchList(coin, false)
+
+        Log.d("Coin removed from fav:", coin.name)
+      }
     }
   }
 
@@ -50,6 +61,7 @@ class WatchListAdapter (
     val item = getItem(position)
 
     holder.bind(item, context)
+    holder.remFromFavListener(item, userViewModel)
   }
 
   class CoinComparator : DiffUtil.ItemCallback<Coin>() {

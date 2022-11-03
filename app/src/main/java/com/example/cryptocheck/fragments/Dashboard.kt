@@ -69,7 +69,7 @@ class Dashboard : Fragment() {
     binding.userViewModel = (activity as MainActivity).userViewModel
 
 
-    val adapter = WatchListAdapter(this)
+    val adapter = WatchListAdapter(this, (activity as MainActivity).userViewModel)
     val recyclerView = getView()?.findViewById<RecyclerView>(R.id.userWatchList)
 
     recyclerView?.adapter = adapter
