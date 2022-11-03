@@ -9,7 +9,7 @@ import kotlinx.coroutines.SupervisorJob
 
 class CoinApplication : Application() {
 
-  val applicationScope = CoroutineScope(SupervisorJob())
+  private val applicationScope = CoroutineScope(SupervisorJob())
 
   val database by lazy { CoinRoomDB.getDatabase(this, applicationScope) }
   val repository by lazy { CoinRepo(database.coinDao()) }

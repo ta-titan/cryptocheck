@@ -7,7 +7,7 @@ import androidx.lifecycle.asLiveData
 import com.example.cryptocheck.model.Coin
 import com.example.cryptocheck.repository.CoinRepo
 
-class CoinViewModel (private val repository : CoinRepo) : ViewModel() {
+class CoinViewModel (repository : CoinRepo) : ViewModel() {
 
   val allCoins : LiveData<List<Coin>> = repository.allCoins.asLiveData()
 }

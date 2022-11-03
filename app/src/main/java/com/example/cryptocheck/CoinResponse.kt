@@ -1,6 +1,5 @@
 package com.example.cryptocheck
 
-import com.example.cryptocheck.model.Coin
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

@@ -2,11 +2,13 @@ package com.example.cryptocheck.roomDB
 
 import android.content.Context
 import android.util.Log
-import androidx.room.*
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.cryptocheck.dao.CoinDao
 import com.example.cryptocheck.dao.UserDao
-import com.example.cryptocheck.data.Datasource
 import com.example.cryptocheck.model.Coin
 import com.example.cryptocheck.model.CurrentUser
 import com.example.cryptocheck.model.User
@@ -14,9 +16,9 @@ import com.example.cryptocheck.util.ListToStringConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(Coin::class, User::class, CurrentUser::class), version = 2, exportSchema = false)
+@Database(entities = [Coin::class, User::class, CurrentUser::class], version = 2, exportSchema = false)
 @TypeConverters(ListToStringConverter::class)
-public abstract class CoinRoomDB : RoomDatabase(){
+abstract class CoinRoomDB : RoomDatabase(){
 
   abstract fun coinDao() : CoinDao
   abstract fun userDao() : UserDao
@@ -28,7 +30,7 @@ public abstract class CoinRoomDB : RoomDatabase(){
     override fun onCreate(db: SupportSQLiteDatabase) {
       super.onCreate(db)
       Log.d("coinDBcallback", "onCreate")
-      INSTANCE?.let { database ->
+      INSTANCE?.let {
         scope.launch {
 
         }
@@ -49,7 +51,7 @@ public abstract class CoinRoomDB : RoomDatabase(){
       // if it is, then create the database
       Log.d("coinRoomDB", "getDatabase")
       return INSTANCE ?: synchronized(this) {
-        Log.d("coinRoomDB", "databseBuilder")
+        Log.d("coinRoomDB", "databaseBuilder")
         val instance = Room.databaseBuilder(
           context.applicationContext,
           CoinRoomDB::class.java,

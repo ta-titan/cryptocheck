@@ -6,8 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.cryptocheck.model.CurrentUser
 import com.example.cryptocheck.model.User
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.flow.Flow
 
 @Dao

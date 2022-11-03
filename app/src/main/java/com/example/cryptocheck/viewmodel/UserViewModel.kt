@@ -1,17 +1,17 @@
 package com.example.cryptocheck.viewmodel
 
 import androidx.databinding.ObservableField
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import com.example.cryptocheck.model.Coin
 import com.example.cryptocheck.model.CurrentUser
-import com.example.cryptocheck.model.User
 import com.example.cryptocheck.repository.UserRepo
-import io.reactivex.rxjava3.core.Flowable
 
 class UserViewModel(private val repo: UserRepo) : ViewModel() {
 
   val currentUserName  = ObservableField<String>()
-  val currentUserWatchList = ObservableField<List<Int>>()
 
   val currentUser : LiveData<CurrentUser> = repo.currentUser.asLiveData()
 

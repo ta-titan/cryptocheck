@@ -1,6 +1,5 @@
 package com.example.cryptocheck.adapter
 
-import android.app.PendingIntent.getActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cryptocheck.CoinApiClient
 import com.example.cryptocheck.R
-import com.example.cryptocheck.fragments.CoinFragment
 import com.example.cryptocheck.fragments.CoinListFragment
 import com.example.cryptocheck.model.Coin
 import com.example.cryptocheck.viewmodel.UserViewModel
@@ -23,21 +20,20 @@ class CoinAdapter(
   private val userViewModel: UserViewModel,
 ) : ListAdapter<Coin, CoinAdapter.CoinViewHolder>(CoinComparator()){
 
-  val apiClient by lazy { CoinApiClient.create() }
   var coins: List<Coin> = ArrayList()
 
-  public interface CreateFragmentListener {
+  interface CreateFragmentListener {
     fun createFragmentListener(coin : Coin)
   }
 //  init { refreshCoins() }
 
-  class CoinViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-    val coinName: TextView = view.findViewById(R.id.coin_name)
-    val coinSymbol: TextView = view.findViewById(R.id.coin_symbol)
-    val coinPrice: TextView = view.findViewById(R.id.coin_price)
-    val coinChange: TextView = view.findViewById(R.id.coin_change)
-    val favButton: CheckBox = view.findViewById(R.id.add2Fav)
-    val symbolLogo : ImageView = view.findViewById(R.id.listItemSvg)
+  class CoinViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private val coinName: TextView = view.findViewById(R.id.coin_name)
+    private val coinSymbol: TextView = view.findViewById(R.id.coin_symbol)
+    private val coinPrice: TextView = view.findViewById(R.id.coin_price)
+    private val coinChange: TextView = view.findViewById(R.id.coin_change)
+    private val favButton: CheckBox = view.findViewById(R.id.add2Fav)
+    private val symbolLogo : ImageView = view.findViewById(R.id.listItemSvg)
 
     fun bind(coin: Coin, userViewModel: UserViewModel, context: CoinListFragment) {
       Log.d("adapter_coin", coin.name)
@@ -48,7 +44,7 @@ class CoinAdapter(
       favButton.isChecked = userViewModel.currentUser.value?.watchList?.contains(coin.id) == true
       Log.d("currentWatchList", userViewModel.currentUser.value?.watchList?.size.toString())
       var resID = context.resources.getIdentifier(coin.symbol.lowercase(), "drawable", "com.example.cryptocheck")
-      if ( resID == null || resID == 0)
+      if (resID == 0)
         resID = context.resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")
 
       if ( coin.symbol.lowercase() == "ape")
@@ -96,12 +92,6 @@ class CoinAdapter(
     holder.add2favListener(item, userViewModel)
     holder.coinNameSymbolListener(item, context)
   }
-
-  fun refreshCoins() {
-    // later will be changed to apiClient.getCoins()
-    // coins = CoinApiClient.getCoins()
-  }
-
 
   class CoinComparator : DiffUtil.ItemCallback<Coin>() {
     override fun areItemsTheSame(oldItem: Coin, newItem: Coin): Boolean {

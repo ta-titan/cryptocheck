@@ -17,12 +17,12 @@ class WatchListAdapter (
   private val context : Dashboard,
 ) : ListAdapter<Coin, WatchListAdapter.WatchListItemHolder>(CoinComparator()) {
 
-  class WatchListItemHolder(private val view : View) : RecyclerView.ViewHolder(view) {
-    val coinName: TextView = view.findViewById(R.id.coin_name_wl)
-    val coinSymbol: TextView = view.findViewById(R.id.coin_symbol_wl)
-    val coinPrice: TextView = view.findViewById(R.id.coin_price_wl)
-    val coinChange: TextView = view.findViewById(R.id.coin_change_wl)
-    val symbolLogo : ImageView = view.findViewById(R.id.coin_logo_wl)
+  class WatchListItemHolder(view : View) : RecyclerView.ViewHolder(view) {
+    private val coinName: TextView = view.findViewById(R.id.coin_name_wl)
+    private val coinSymbol: TextView = view.findViewById(R.id.coin_symbol_wl)
+    private val coinPrice: TextView = view.findViewById(R.id.coin_price_wl)
+    private val coinChange: TextView = view.findViewById(R.id.coin_change_wl)
+    private val symbolLogo : ImageView = view.findViewById(R.id.coin_logo_wl)
 
     fun bind(coin: Coin, context : Dashboard) {
       Log.d("watchListViewHolder", coin.name)
@@ -31,7 +31,7 @@ class WatchListAdapter (
       coinSymbol.text = coin.symbol
       coinChange.text = coin.percentChange1D.toString()
       var resID = context.resources.getIdentifier(coin.symbol.lowercase(), "drawable", "com.example.cryptocheck")
-      if ( resID == null || resID == 0)
+      if (resID == 0)
         resID = context.resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")
 
       symbolLogo.setImageResource(resID)
@@ -39,7 +39,7 @@ class WatchListAdapter (
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListItemHolder {
-    var adapterLayout = LayoutInflater.from(parent.context)
+    val adapterLayout = LayoutInflater.from(parent.context)
       .inflate(R.layout.watch_list_item, parent, false)
 
     Log.d("wl_adapter", "watch list adapter created ")

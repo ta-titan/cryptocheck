@@ -2,7 +2,6 @@ package com.example.cryptocheck.util
 
 import com.example.cryptocheck.CoinResponse
 import com.example.cryptocheck.model.Coin
-import java.math.RoundingMode
 import java.text.DecimalFormat
 
 

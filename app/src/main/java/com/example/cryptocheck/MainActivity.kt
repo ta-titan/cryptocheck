@@ -1,22 +1,14 @@
 package com.example.cryptocheck
 
-import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.ViewGroup
 import androidx.activity.viewModels
-import androidx.annotation.MainThread
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.appcompat.app.AppCompatActivity
 import com.example.cryptocheck.data.Datasource
 import com.example.cryptocheck.databinding.ActivityMainBinding
 import com.example.cryptocheck.model.Coin
 import com.example.cryptocheck.model.CurrentUser
 import com.example.cryptocheck.util.ApiHelper
-import com.example.cryptocheck.util.DbHelper
 import com.example.cryptocheck.viewmodel.CoinViewModel
 import com.example.cryptocheck.viewmodel.CoinViewModelFactory
 import com.example.cryptocheck.viewmodel.UserViewModel
@@ -30,12 +22,12 @@ class MainActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityMainBinding
 
-  val apiClient by lazy { CoinApiClient.create() }
+  private val apiClient by lazy { CoinApiClient.create() }
 
-  public val userViewModel: UserViewModel by viewModels<UserViewModel> {
+  val userViewModel: UserViewModel by viewModels {
     UserViewModelFactory((application as CoinApplication).userRepo)
   }
-  public val coinViewModel: CoinViewModel by viewModels<CoinViewModel> {
+  val coinViewModel: CoinViewModel by viewModels {
     CoinViewModelFactory((application as CoinApplication).repository)
   }
 
@@ -45,7 +37,7 @@ class MainActivity : AppCompatActivity() {
       .subscribe({ coins : CoinResponse? ->
         if ( coins != null) {
 //          Log.d("api_response",coins.coinData?.size.toString())
-          var coinsDecoded = ApiHelper.Companion.convertResponseToModel(coins)
+          val coinsDecoded = ApiHelper.convertResponseToModel(coins)
           Log.d("apiCall", coinsDecoded.size.toString())
           updateDatabase(coinsDecoded)
         }
@@ -55,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
   }
 
-   fun updateDatabase(coins : List<Coin>) {
+   private fun updateDatabase(coins : List<Coin>) {
      CoroutineScope(Dispatchers.IO).launch {
        // default data
        val coinDao = (application as CoinApplication).database.coinDao()
@@ -67,7 +59,7 @@ class MainActivity : AppCompatActivity() {
      }
   }
 
-  fun cleanDatabase() {
+  private fun cleanDatabase() {
     CoroutineScope(Dispatchers.IO).launch {
       // default data
       val coinDao = (application as CoinApplication).database.coinDao()
