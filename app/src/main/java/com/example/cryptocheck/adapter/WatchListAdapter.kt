@@ -5,19 +5,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptocheck.R
-import com.example.cryptocheck.fragments.Dashboard
+import com.example.cryptocheck.fragments.DashboardFragment
 import com.example.cryptocheck.model.Coin
 import com.example.cryptocheck.viewmodel.UserViewModel
 
 class WatchListAdapter (
-  private val context : Dashboard,
+  private val context : DashboardFragment,
   private val userViewModel: UserViewModel,
 ) : ListAdapter<Coin, WatchListAdapter.WatchListItemHolder>(CoinComparator()) {
 
@@ -30,7 +29,7 @@ class WatchListAdapter (
     private val deleteButton : ImageView = view.findViewById(R.id.removeFromWatchList)
     private val coinChangeSymbol : ImageView = view.findViewById(R.id.changeSymbol_wl)
 
-    fun bind(coin: Coin, context : Dashboard) {
+    fun bind(coin: Coin, context : DashboardFragment) {
       Log.d("watchListViewHolder", coin.name)
       coinName.text = coin.name
       coinPrice.text = coin.price.toString()
@@ -51,11 +50,23 @@ class WatchListAdapter (
 
       symbolLogo.setImageResource(resID)
     }
-    fun remFromFavListener(coin : Coin, userViewModel: UserViewModel) {
-      deleteButton.setOnClickListener {
-        userViewModel.addCoinToWatchList(coin, false)
 
+    fun removeFromFavoriteListener(coin : Coin, userViewModel: UserViewModel) {
+      deleteButton.setOnClickListener {
+        userViewModel.updateWatchList(coin, false)
         Log.d("Coin removed from fav:", coin.name)
+      }
+    }
+
+    fun coinNameSymbolListener(coin : Coin, context: DashboardFragment) {
+      coinName.setOnClickListener {
+        context.createFragmentListener(coin)
+      }
+      coinSymbol.setOnClickListener {
+        context.createFragmentListener(coin)
+      }
+      symbolLogo.setOnClickListener {
+        context.createFragmentListener(coin)
       }
     }
   }
@@ -63,16 +74,15 @@ class WatchListAdapter (
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListItemHolder {
     val adapterLayout = LayoutInflater.from(parent.context)
       .inflate(R.layout.watch_list_item, parent, false)
-
     Log.d("wl_adapter", "watch list adapter created ")
     return WatchListItemHolder(adapterLayout)
   }
 
   override fun onBindViewHolder(holder: WatchListItemHolder, position: Int) {
     val item = getItem(position)
-
     holder.bind(item, context)
-    holder.remFromFavListener(item, userViewModel)
+    holder.removeFromFavoriteListener(item, userViewModel)
+    holder.coinNameSymbolListener(item, context)
   }
 
   class CoinComparator : DiffUtil.ItemCallback<Coin>() {

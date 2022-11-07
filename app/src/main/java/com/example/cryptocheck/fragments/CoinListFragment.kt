@@ -18,18 +18,17 @@ class CoinListFragment : Fragment(), CoinAdapter.CreateFragmentListener {
 
   override fun createFragmentListener(coin: Coin) {
     val coinFragment = CoinFragment(coin)
-    activity?.supportFragmentManager
-      ?.beginTransaction()
-      ?.replace(R.id.flFragmentHost, coinFragment)
-      ?.addToBackStack(null)
-      ?.commit()
+    requireActivity().supportFragmentManager
+      .beginTransaction()
+      .replace(R.id.fragmentContainerHost, coinFragment)
+      .addToBackStack(null)
+      .commit()
   }
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
-
     return inflater.inflate(R.layout.coin_list, container, false)
   }
 
@@ -46,16 +45,13 @@ class CoinListFragment : Fragment(), CoinAdapter.CreateFragmentListener {
     val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view)
     if (recyclerView != null) {
       recyclerView.adapter = adapter
+      recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
     } else {
       Log.d("coinListFragment", "Recycler view is null")
     }
 
-    (activity as MainActivity).coinViewModel.allCoins.observe( viewLifecycleOwner) { coins ->
+    (activity as MainActivity).coinViewModel.allCoins.observe(viewLifecycleOwner) { coins ->
       coins.let { adapter.submitList(it) }
     }
-
-    recyclerView?.addItemDecoration(DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL))
-
   }
-
 }

@@ -11,7 +11,7 @@
     tools:layout="@layout/coin_list" />
   <fragment
     android:id="@+id/secondFragment"
-    android:name="com.example.cryptocheck.fragments.Dashboard"
+    android:name="com.example.cryptocheck.fragments.DashboardFragment"
     android:label="fragment_second"
     tools:layout="@layout/fragment_dashboard" />
 </navigation>

@@ -17,16 +17,22 @@ import com.example.cryptocheck.adapter.WatchListAdapter
 import com.example.cryptocheck.databinding.FragmentDashboardBinding
 import com.example.cryptocheck.model.Coin
 
-class Dashboard : Fragment() {
-
+class DashboardFragment : Fragment() {
   private lateinit var binding: FragmentDashboardBinding
 
+  fun createFragmentListener(coin: Coin) {
+    val coinFragment = CoinFragment(coin)
+    requireActivity().supportFragmentManager
+      .beginTransaction()
+      .replace(R.id.fragmentContainerHost, coinFragment)
+      .addToBackStack(null)
+      .commit()
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-    // Inflate the layout for this fragment
     binding = FragmentDashboardBinding.inflate(inflater, container, false)
     return binding.root
   }
@@ -68,12 +74,10 @@ class Dashboard : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     binding.userViewModel = (activity as MainActivity).userViewModel
 
-
     val adapter = WatchListAdapter(this, (activity as MainActivity).userViewModel)
     val recyclerView = getView()?.findViewById<RecyclerView>(R.id.userWatchList)
 
     recyclerView?.adapter = adapter
-    recyclerView?.setHasFixedSize(true)
     recyclerView?.addItemDecoration(DividerItemDecoration(
       recyclerView.context,
       DividerItemDecoration.VERTICAL
@@ -84,10 +88,8 @@ class Dashboard : Fragment() {
       (activity as MainActivity).userViewModel.currentUserName.set(it.userName)
     }
 
-
     binding.editUsername.setOnClickListener{
       getUsernameDialog()
     }
-
   }
 }

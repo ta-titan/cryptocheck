@@ -21,14 +21,12 @@ class CoinAdapter(
   private val userViewModel: UserViewModel,
 ) : ListAdapter<Coin, CoinAdapter.CoinViewHolder>(CoinComparator()){
 
-  var coins: List<Coin> = ArrayList()
-
   interface CreateFragmentListener {
     fun createFragmentListener(coin : Coin)
   }
-//  init { refreshCoins() }
 
   class CoinViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    // pass to xml
     private val coinName: TextView = view.findViewById(R.id.coin_name)
     private val coinSymbol: TextView = view.findViewById(R.id.coin_symbol)
     private val coinPrice: TextView = view.findViewById(R.id.coin_price)
@@ -54,30 +52,25 @@ class CoinAdapter(
         coinChange.setTextColor(Color.GREEN)
       }
 
+      // create constants and make separate function for resId
+
       Log.d("currentWatchList", userViewModel.currentUser.value?.watchList?.size.toString())
       var resID = context.resources.getIdentifier(coin.symbol.lowercase(), "drawable", "com.example.cryptocheck")
       if (resID == 0)
         resID = context.resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")
 
-      if ( coin.symbol.lowercase() == "ape")
+      if (coin.symbol.lowercase() == "ape")
         resID = context.resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")
 
       symbolLogo.setImageResource(resID)
     }
 
-    fun add2favListener(coin : Coin, userViewModel: UserViewModel) {
+    fun addToFavListener(coin : Coin, userViewModel: UserViewModel) {
       favButton.setOnClickListener {
-        if ( favButton.isChecked ) {
-          Log.d("already_checked", coin.name)
-          userViewModel.addCoinToWatchList(coin, true)
-        }
-        else {
-          userViewModel.addCoinToWatchList(coin, false)
-        }
+        userViewModel.updateWatchList(coin, favButton.isChecked)
         Log.d("Coin added to fav:", coin.name)
       }
     }
-
 
     fun coinNameSymbolListener(coin : Coin, context: CoinListFragment) {
       coinName.setOnClickListener {
@@ -86,22 +79,23 @@ class CoinAdapter(
       coinSymbol.setOnClickListener {
         context.createFragmentListener(coin)
       }
+      symbolLogo.setOnClickListener {
+        context.createFragmentListener(coin)
+      }
     }
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinViewHolder {
     Log.d("adapter", "adapter_onCreateViewHolder")
-    // create a new view
     val adapterLayout = LayoutInflater.from(parent.context)
       .inflate(R.layout.coin_list_item, parent, false)
-
     return CoinViewHolder(adapterLayout)
   }
 
   override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
     val item = getItem(position)
     holder.bind(item, userViewModel, context)
-    holder.add2favListener(item, userViewModel)
+    holder.addToFavListener(item, userViewModel)
     holder.coinNameSymbolListener(item, context)
   }
 

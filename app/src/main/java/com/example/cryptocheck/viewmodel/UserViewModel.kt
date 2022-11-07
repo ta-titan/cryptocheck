@@ -9,17 +9,16 @@ import com.example.cryptocheck.model.Coin
 import com.example.cryptocheck.model.CurrentUser
 import com.example.cryptocheck.repository.UserRepo
 
-class UserViewModel(private val repo: UserRepo) : ViewModel() {
+class UserViewModel(private val repo: UserRepo): ViewModel() {
 
   val currentUserName  = ObservableField<String>()
-
   val currentUser : LiveData<CurrentUser> = repo.currentUser.asLiveData()
 
-  fun addCoinToWatchList(coin : Coin, add : Boolean ) {
-    repo.addCoinToWatchList(coin, add)
+  fun updateWatchList(coin: Coin, add: Boolean) {
+    repo.updateWatchList(coin, add)
   }
 
-  fun updateUsername(name : String) {
+  fun updateUsername(name: String) {
     repo.updateUsername(name)
   }
 }

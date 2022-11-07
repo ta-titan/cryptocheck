@@ -15,14 +15,12 @@ class UserRepo(private val userDao: UserDao) {
 
   val currentUser: Flow<CurrentUser> = userDao.getCurrentUser()
 
-  fun addCoinToWatchList(coin: Coin, add : Boolean) {
+  fun updateWatchList(coin: Coin, add : Boolean) {
     CoroutineScope(Dispatchers.IO).launch {
-
       val watchList = currentUser.first().watchList.toMutableList()
-      if ( add ) {
+      if (add) {
         watchList.add(coin.id)
-      }
-      else {
+      } else {
         watchList.remove(coin.id)
       }
       Log.d("Watchlist upd in repo", watchList.size.toString())
@@ -36,5 +34,4 @@ class UserRepo(private val userDao: UserDao) {
       userDao.updateUserName(name, id)
     }
   }
-
 }

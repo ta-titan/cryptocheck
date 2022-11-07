@@ -21,14 +21,12 @@ class NavHostFragment : Fragment() {
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
-
     binding  = NavHostBinding.inflate(inflater, container, false)
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-
     navController = activity?.let { Navigation.findNavController(it, R.id.flFragment) }!!
     setupWithNavController(binding.bottomNavigationView, navController)
   }

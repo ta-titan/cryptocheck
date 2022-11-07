@@ -7,7 +7,8 @@ class CoinResponse {
 
   @SerializedName("data")
   @Expose
-  var coinData : List<CoinResponseElement> ?= null
+
+  val coinData: Set<CoinResponseElement>? = null
 
   class CoinResponseElement {
 
@@ -32,30 +33,29 @@ class CoinResponse {
   class Quote {
     @SerializedName("USD")
     @Expose
-    var usd : USD ?= null
+    var usd: USD? = null
   }
 
   class USD {
-
     @SerializedName("price")
     @Expose
-    var price : Double ?= 0.0
+    var price: Double? = 0.0
 
     @SerializedName("volume_24h")
     @Expose
-    var volume_24h : Double ?= 0.0
+    var volume24h: Double? = 0.0
 
     @SerializedName("percent_change_1h")
     @Expose
-    var percent_change_1h : Double = 0.0
+    var percentChange1h: Double = 0.0
 
     @SerializedName("percent_change_24h")
     @Expose
-    var percent_change_24h : Double ?= 0.0
+    var percentChange24h: Double? = 0.0
 
     @SerializedName("percent_change_7d")
     @Expose
-    var percent_change_7d : Double ?= 0.0
+    var percentChange7d: Double? = 0.0
 
   }
 }

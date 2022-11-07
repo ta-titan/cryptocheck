@@ -1,5 +1,6 @@
 package com.example.cryptocheck.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.cryptocheck.databinding.CoinDetailBinding
 import com.example.cryptocheck.model.Coin
 
-class CoinFragment(var coin: Coin) : Fragment() {
+class CoinFragment(val coin: Coin) : Fragment() {
 
   private lateinit var binding : CoinDetailBinding
 
@@ -22,13 +23,38 @@ class CoinFragment(var coin: Coin) : Fragment() {
   }
 
   private fun bindValues() {
-    binding.setCoinName(coin.name)
-    binding.setCoinPrice(coin.price.toString())
-    binding.setCoinSymbol(coin.symbol)
-    binding.coinVolume = coin.volume.toString()
-    binding.setChange1d(coin.percentChange1D.toString())
-    binding.setChange1h(coin.percentChange1H.toString())
-    binding.setChange1w(coin.percentChange1W.toString())
+    binding.coin = coin
+
+    if (coin.percentChange1D!! < 0) {
+      binding.change1d.setTextColor(Color.RED)
+      val resTrendingDown = context?.resources?.getIdentifier("trending_down", "drawable", "com.example.cryptocheck")
+      if (resTrendingDown != null) {
+        binding.change1DLogo.setImageResource(resTrendingDown)
+      }
+    } else {
+      binding.change1d.setTextColor(Color.GREEN)
+    }
+
+    if (coin.percentChange1H!! < 0) {
+      binding.change1h.setTextColor(Color.RED)
+      val resTrendingDown = context?.resources?.getIdentifier("trending_down", "drawable", "com.example.cryptocheck")
+      if (resTrendingDown != null) {
+        binding.change1HLogo.setImageResource(resTrendingDown)
+      }
+    } else {
+      binding.change1h.setTextColor(Color.GREEN)
+    }
+
+    if (coin.percentChange1W!! < 0) {
+      binding.change1w.setTextColor(Color.RED)
+      val resTrendingDown = context?.resources?.getIdentifier("trending_down", "drawable", "com.example.cryptocheck")
+      if (resTrendingDown != null) {
+        binding.change1WLogo.setImageResource(resTrendingDown)
+      }
+    } else {
+      binding.change1w.setTextColor(Color.GREEN)
+    }
+
     var resID = resources.getIdentifier(coin.symbol.lowercase(), "drawable", "com.example.cryptocheck" )
     if (resID == 0)
       resID = resources.getIdentifier("cob", "drawable", "com.example.cryptocheck")

@@ -17,7 +17,7 @@ class ListToStringConverter {
   fun toStringArrayList(value: String): List<String> {
     return try {
       val listType: Type = object : TypeToken<List<String?>?>() {}.type
-      Gson().fromJson(value, listType) //using extension function
+      Gson().fromJson(value, listType)
     } catch (e: Exception) {
       arrayListOf()
     }
